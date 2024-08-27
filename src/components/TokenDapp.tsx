@@ -1,14 +1,13 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import axios from 'axios';
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast, ToastContainer } from 'react-toastify'; // Import toast and ToastContainer
+import 'react-toastify/dist/ReactToastify.css'; // Import styles
 import styles from '../styles/Home.module.css';
 import { withdrawToken } from '@/services/token.service';
 import { TxStatus } from './TxStatus';
 import { useWallet } from '@alephium/web3-react';
 import { node } from '@alephium/web3';
 import { TokenFaucetConfig } from '@/services/utils';
-import Navbar from './NAvbar' // Import Navbar component
 
 export const TokenDapp: React.FC<{ config: TokenFaucetConfig }> = ({ config }) => {
   const { signer, account } = useWallet();
@@ -30,7 +29,7 @@ export const TokenDapp: React.FC<{ config: TokenFaucetConfig }> = ({ config }) =
     };
 
     fetchCryptoPrice();
-    const interval = setInterval(fetchCryptoPrice, 60000);
+    const interval = setInterval(fetchCryptoPrice, 60000); // Fetch price every 60 seconds
 
     return () => clearInterval(interval);
   }, []);
@@ -41,9 +40,9 @@ export const TokenDapp: React.FC<{ config: TokenFaucetConfig }> = ({ config }) =
       try {
         const result = await withdrawToken(signer, withdrawAmount, config.faucetTokenId);
         setOngoingTxId(result.txId);
-        toast.success('Withdrawal successful!');
+        toast.success('Withdrawal successful!'); // Notify on success
       } catch (error) {
-        toast.error('Error during withdrawal.');
+        toast.error('Error during withdrawal.'); // Notify on error
       }
     }
   };
@@ -67,47 +66,55 @@ export const TokenDapp: React.FC<{ config: TokenFaucetConfig }> = ({ config }) =
   );
 
   return (
-    <div className={styles.container}>
-      <Navbar /> {/* Add Navbar component here */}
-      <div className={styles.card}>
-        <h2 className={styles.title}>AZNET Alephium Fund</h2>
-        <p className={styles.subtitle}>Network: {config.network}</p>
+    <div className={styles.pageContainer}>
+      <div className={styles.contentWrapper}>
+        <div className={styles.card}>
+          <h2 className={styles.title}>AZNET Alephium Fund</h2>
+          <p className={styles.subtitle}>Network: {config.network}</p>
 
-        <div className={styles.accountInfo}>
-          <p><strong>Public Key:</strong> {account?.publicKey ?? '???'}</p>
-          <p><strong>Group Index:</strong> {addressGroup}</p>
-          <p><strong>Token ID:</strong> {config.faucetTokenId}</p>
+          <div className={styles.accountInfo}>
+            <p><strong>Public Key:</strong> {account?.publicKey ?? '???'}</p>
+            <p><strong>Group Index:</strong> {addressGroup}</p>
+            <p><strong>Token ID:</strong> {config.faucetTokenId}</p>
+          </div>
+
+          {cryptoPrice !== null && (
+            <div className={styles.priceInfo}>
+              <p><strong>Alephium Price:</strong> ${cryptoPrice}</p>
+            </div>
+          )}
+
+          <form onSubmit={handleWithdrawSubmit} className={styles.form}>
+            <div className={styles.formGroup}>
+              <input
+                type="number"
+                id="withdraw-amount"
+                name="amount"
+                max="20"
+                min="1"
+                value={withdrawAmount}
+                onChange={(e) => setWithdrawAmount(e.target.value)}
+                className={styles.input}
+                placeholder="Amount"
+              />
+            </div>
+            <button type="submit" disabled={!!ongoingTxId} className={styles.button}>
+              Confirm The Transaction 
+            </button>
+          </form>
+
+          {ongoingTxId && <TxStatus txId={ongoingTxId} txStatusCallback={txStatusCallback} />}
         </div>
-
-        {cryptoPrice !== null && (
-          <div className={styles.priceInfo}>
-            <p><strong>Alephium Price:</strong> ${cryptoPrice}</p>
-          </div>
-        )}
-
-        <form onSubmit={handleWithdrawSubmit} className={styles.form}>
-          <div className={styles.formGroup}>
-            <label htmlFor="withdraw-amount" className={styles.label}>Amount to Withdraw</label>
-            <input
-              type="number"
-              id="withdraw-amount"
-              name="amount"
-              max="20"
-              min="1"
-              value={withdrawAmount}
-              onChange={(e) => setWithdrawAmount(e.target.value)}
-              className={styles.input}
-            />
-          </div>
-          <button type="submit" disabled={!!ongoingTxId} className={styles.button}>
-            Send Me Token
-          </button>
-        </form>
-
-        {ongoingTxId && <TxStatus txId={ongoingTxId} txStatusCallback={txStatusCallback} />}
       </div>
 
-      <ToastContainer />
+      <footer className={styles.footer}>
+        <div className={styles.content}>
+          <h2>About Us</h2>
+          <p>This is a decentralized app (DApp) built on the Alephium blockchain. Our mission is to provide secure, efficient, and user-friendly tools for managing and transacting tokens.</p>
+        </div>
+      </footer>
+
+      <ToastContainer /> {/* Add ToastContainer here */}
     </div>
   );
 };
