@@ -86,3 +86,8 @@ a {
     color-scheme: dark;
   }
 }
+.image {
+  width: 100%;
+  height: 100%;
+  display: inline-block;
+}
