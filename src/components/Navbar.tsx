@@ -1,20 +1,30 @@
 import React from 'react';
 import styles from './Navbar.module.css';
+import Link from 'next/link';
 
 const Navbar: React.FC = () => {
   return (
     <nav className={styles.navbar}>
-      <div className={styles.logo}>Aznet  Ready</div>
-      <ul className={styles.navItems}>
-        <li><a href="#home">Home</a></li>
-        <li><a href="#projects">Projects</a></li>
-        <li><a href="#about">About</a></li> {/* This links to the footer */}
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-      <div className={styles.ctaButton}>
-        <a href="#get-started">Get Started</a>
-      </div>
-    </nav>
+    <Link href={'/'} className={styles.logo}>Aznet.</Link>
+    <ul className={styles.navLinks}>
+      
+      <li>
+        <Link href="/project" className={styles.navItem}>
+          Project
+        </Link>
+      </li>
+      <li>
+      <Link href="/about" className={styles.navItem}>
+          About
+        </Link>
+      </li>
+      <li>
+      <Link href="/contact" className={styles.navItem}>
+          Contact
+        </Link>
+      </li>
+    </ul>
+  </nav>
   );
 };
 
