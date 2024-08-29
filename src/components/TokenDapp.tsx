@@ -107,12 +107,7 @@ export const TokenDapp: React.FC<{ config: TokenFaucetConfig }> = ({ config }) =
         </div>
       </div>
 
-      <footer className={styles.footer}>
-        <div className={styles.content}>
-          <h2>About Us</h2>
-          <p>This is a decentralized app (DApp) built on the Alephium blockchain. Our mission is to provide secure, efficient, and user-friendly tools for managing and transacting tokens.</p>
-        </div>
-      </footer>
+      
 
       <ToastContainer /> {/* Add ToastContainer here */}
     </div>
