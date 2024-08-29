@@ -7,6 +7,7 @@ import { tokenFaucetConfig } from '@/services/utils'
 import Link from 'next/link'
 import Navbar from '@/components/Navbar'
 
+
 const Home: any = () => {
   const { connectionStatus } = useWallet()
   console.log("connectionStatus : ",connectionStatus)
@@ -20,7 +21,7 @@ const Home: any = () => {
 		<div className='wrapper'>
        <Navbar />
         <section className={styles.spotlight}>
-          <h1 className={styles.title}>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius, minima</h1>
+          <h1 className={styles.title}>Secure, fast, and decentralized way of the  money transfers with Aznet—empowering your financial freedom.</h1>
           <Link href={'/project'} className={styles.button}>Get started</Link>
         </section>
         {/* <footer>
