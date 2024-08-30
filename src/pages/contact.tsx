@@ -44,7 +44,6 @@ const styles = {
   container: {
     padding: '100px',
     marginTop: '70px',
-    textAlign : 'center'
   },
   heading: {
     fontSize: '24px',
