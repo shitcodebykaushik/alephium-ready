@@ -16,7 +16,9 @@ const contact = () => {
         width: '100%',    // Set width as needed
       }}
     >
+
         {/* <div className="overlay" style={styles.overlay}></div>     */}
+
       <div className="wrapper">
         <Navbar />
         <div style={styles.container}>
@@ -31,6 +33,7 @@ const contact = () => {
               <Image src={'/images/discord.png'} alt="" width={100} height={100}  className='image'/>
             </Link>
             <Link href={'mailto:support@example.com'} style={styles.box}>
+
               <Image src={'/images/gmail.png'} alt="" width={20} height={20} className='image'/>
             </Link>
           </div>
@@ -45,15 +48,6 @@ const styles = {
     padding: '100px',
     marginTop: '70px',
   },
-//   overlay: {
-//     position: 'absolute',
-//     top: 0,
-//     left: 0,
-//     right: 0,
-//     bottom: 0,
-//     backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent black
-//     zIndex: -1, // Ensure the overlay is above the background but below the content
-//   },
   heading: {
     fontSize: '24px',
     fontWeight: '500',
@@ -70,6 +64,7 @@ const styles = {
     fontWeight: '400',
     marginBottom: '40px',
     width : '70%'
+
   },
  iconBox:{
     display : 'flex',

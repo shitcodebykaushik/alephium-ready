@@ -3,6 +3,7 @@ import React from 'react'
 
 const about = () => {
   return (
+
     <div
     className='overlay'
       style={{
@@ -15,6 +16,7 @@ const about = () => {
         // backgroundAttachment : 'fixed'   // Set width as needed
       }}
     >
+
       <div className="wrapper">
         <Navbar />
         <div style={styles.container}>
@@ -50,8 +52,10 @@ const about = () => {
 const styles  = {
     container: {
         padding: '80px',
+
         paddingTop : '0',
         marginTop : '60px'
+
     },
     heading: {
         fontSize: '24px',
@@ -64,14 +68,15 @@ const styles  = {
         marginBottom: '10px',
     },
     paragraph: {
+
         fontSize: '20px',
         lineHeight: '1.5',
         fontWeight: '400',
         marginBottom: '40px',
         width : '70%'
       },
+
     
 }
 
 export default about
-
