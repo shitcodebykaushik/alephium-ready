@@ -19,6 +19,9 @@
   font-size: 20px;
   margin-bottom: 13px;
 }
+.details {
+  text-align: left;
+}
 .details p {
   margin-bottom: 8px;
   font-style: normal;
