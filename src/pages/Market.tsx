@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { Line } from 'react-chartjs-2';
-import Navbar from '@/components/Navbar';
+import React, { useEffect, useState } from 'react'
+import { Line } from 'react-chartjs-2'
+import Navbar from '@/components/Navbar'
+import styles from '../styles/market.module.css'
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -9,73 +10,120 @@ import {
   LineElement,
   Title,
   Tooltip,
-  Legend,
-} from 'chart.js';
+  Legend
+} from 'chart.js'
 
 // Register the chart components
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend)
 
 // Define the Coin interface
 interface Coin {
-  id: string;
-  name: string;
-  symbol: string;
-  current_price: number;
+  id: string
+  symbol: string
+  name: string
+  image: string
+  current_price: number
+  market_cap: number
+  market_cap_rank: number
+  price_change_percentage_24h: number
 }
 
 const Market: React.FC = () => {
   // Initialize the chart data structure correctly
-  const [chartData, setChartData] = useState({
-    labels: [] as string[], // Empty array of strings for labels initially
-    datasets: [
-      {
-        label: 'Current Price (USD)',
-        data: [] as number[], // Empty array of numbers for data initially
-        borderColor: '#00FF00',
-        backgroundColor: 'rgba(0, 255, 0, 0.2)',
-        borderWidth: 2,
-      },
-    ],
-  });
+  const [coins, setCoins] = useState<Coin[]>([])
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const fetchCryptoData = async () => {
-      const response = await fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10&page=1&sparkline=false');
-      const data: Coin[] = await response.json();
+      try {
+        const response = await fetch(
+          'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=15&page=1&sparkline=false'
+        )
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`)
+        }
+        const data: Coin[] = await response.json()
+        setCoins(data)
+      } catch (error) {
+        console.error('Failed to fetch data:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
 
-      setChartData({
-        labels: data.map((coin: Coin) => coin.name),
-        datasets: [
-          {
-            label: 'Current Price (USD)',
-            data: data.map((coin: Coin) => coin.current_price),
-            borderColor: '#00FF00',
-            backgroundColor: 'rgba(0, 255, 0, 0.2)',
-            borderWidth: 2,
-          },
-        ],
-      });
-    };
-
-    fetchCryptoData();
-  }, []);
+    fetchCryptoData()
+  }, [])
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '20px' }}>
-      <Navbar />
-      <h1 style={{ color: '#333', marginBottom: '20px' }}>Live Cryptocurrency Market</h1>
-      <div style={{
-        width: '80%',
-        maxWidth: '800px',
-        background: '#fff',
-        borderRadius: '8px',
-        padding: '20px',
-        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-      }}>
-        <Line data={chartData} />
+    <div className={styles.main}>
+      <div className="wrapper">
+        <Navbar />
+        {loading ? (
+          <h1
+            style={{
+              textAlign: 'center',
+              marginTop: '20%'
+            }}
+          >
+            Loading...
+          </h1>
+        ) : (
+          <div style={{ marginTop: '50px' }}>
+            <h1 className={styles.title}>Live Cryptocurrency Market</h1>
+            <div
+              style={{
+                borderRadius: '20px',
+                overflow: 'hidden',
+                border: '1px solid #ddd',
+                maxHeight: '550px',
+                overflowY: 'auto'
+              }}
+            >
+              <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                <thead style={{ position: 'sticky', top: 0 }}>
+                  <tr style={{ backgroundColor: '#282c34', color: 'white' }}>
+                    <th style={{ padding: '10px', border: '1px solid #ddd' }}>Name</th>
+                    <th style={{ padding: '10px', border: '1px solid #ddd' }}>Symbol</th>
+                    <th style={{ padding: '10px', border: '1px solid #ddd' }}>Current Price (USD)</th>
+                    <th style={{ padding: '10px', border: '1px solid #ddd' }}>Rank</th>
+                    <th style={{ padding: '10px', border: '1px solid #ddd' }}>Market Cap (USD)</th>
+                    <th style={{ padding: '10px', border: '1px solid #ddd' }}>24h Change (%)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {coins.map((coin) => (
+                    <tr key={coin.id} style={{ textAlign: 'center' }}>
+                      <td style={{ padding: '10px', border: '1px solid #ddd' }}>
+                        <img src={coin.image} alt={coin.name} style={{ width: '20px', marginRight: '10px' }} />
+                        {coin.name}
+                      </td>
+                      <td style={{ padding: '10px', border: '1px solid #ddd' }}>{coin.symbol.toUpperCase()}</td>
+                      <td style={{ padding: '10px', border: '1px solid #ddd' }}>
+                        ${coin.current_price.toLocaleString()}
+                      </td>
+                      <td style={{ padding: '10px', border: '1px solid #ddd' }}>
+                        {coin.market_cap_rank.toLocaleString()}
+                      </td>
+                      <td style={{ padding: '10px', border: '1px solid #ddd' }}>${coin.market_cap.toLocaleString()}</td>
+                      <td
+                        style={{
+                          padding: '10px',
+                          border: '1px solid #ddd',
+                          color: coin.price_change_percentage_24h > 0 ? 'green' : 'red'
+                        }}
+                      >
+                        {coin.price_change_percentage_24h.toFixed(2)}%
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Market;
+export default Market

@@ -16,6 +16,9 @@ const contact = () => {
         width: '100%',    // Set width as needed
       }}
     >
+
+        {/* <div className="overlay" style={styles.overlay}></div>     */}
+
       <div className="wrapper">
         <Navbar />
         <div style={styles.container}>
@@ -59,19 +62,21 @@ const styles = {
     fontSize: '20px',
     lineHeight: '1.5',
     fontWeight: '400',
-    marginBottom: '40px'
+    marginBottom: '40px',
+    width : '70%'
+
   },
  iconBox:{
     display : 'flex',
     alignItems : 'center',
-    margin : '0 auto',
+    // margin : '0 auto',
     width : 'fit-content'
  },
  box:{
     borderRadius : '50%',
     overflow:'hidden',
     width : '70px',
-    marginLeft : '20px'
+    marginRight : '20px'
  }
 }
 

@@ -14,10 +14,10 @@ const Home: any = () => {
 
   return (
       <div className={styles.main}>
-		<video autoPlay muted loop className={styles.videoBackground}>
+		{/* <video autoPlay muted loop className={styles.videoBackground}>
         <source src="/videos/bg.mp4" type="video/mp4" />
         Your browser does not support the video tag.
-      </video>
+      </video> */}
 		<div className='wrapper'>
        <Navbar />
         <section className={styles.spotlight}>

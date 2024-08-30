@@ -13,18 +13,23 @@ const Navbar: React.FC = () => {
           </Link>
         </li>
         <li>
+          <Link href="/market" className={styles.navItem}>
+            Market
+          </Link>
+        </li>
+        {/* <li>
+          <Link href="/fintech" className={styles.navItem}>
+            Fintech
+          </Link>
+        </li> */}
+        <li>
           <Link href="/about" className={styles.navItem}>
             About
           </Link>
         </li>
         <li>
-          <Link href="/market" className={styles.navItem}>
-            Market
-          </Link>
-        </li>
-        <li>
-          <Link href="/fintech" className={styles.navItem}>
-            Fintech
+          <Link href="/contact" className={styles.navItem}>
+            Contact
           </Link>
         </li>
       </ul>

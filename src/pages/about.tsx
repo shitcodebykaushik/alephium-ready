@@ -3,7 +3,20 @@ import React from 'react'
 
 const about = () => {
   return (
-    <div>
+
+    <div
+    className='overlay'
+      style={{
+        backgroundImage: "url('/images/al-bg.jpg')",
+        backgroundSize: 'cover',  // Ensure the image covers the entire div
+        backgroundPosition: 'center',  // Center the image
+        backgroundRepeat: 'no-repeat',  // Prevent the image from repeating
+        // height: '80vh',  // Set height as needed
+        // width: '100%', 
+        // backgroundAttachment : 'fixed'   // Set width as needed
+      }}
+    >
+
       <div className="wrapper">
         <Navbar />
         <div style={styles.container}>
@@ -39,7 +52,10 @@ const about = () => {
 const styles  = {
     container: {
         padding: '80px',
-        marginTop : '30px'
+
+        paddingTop : '0',
+        marginTop : '60px'
+
     },
     heading: {
         fontSize: '24px',
@@ -52,11 +68,14 @@ const styles  = {
         marginBottom: '10px',
     },
     paragraph: {
-        fontSize: '18px',
+
+        fontSize: '20px',
         lineHeight: '1.5',
-        fontWeight: '300',
-        marginBottom : '40px'
-    },
+        fontWeight: '400',
+        marginBottom: '40px',
+        width : '70%'
+      },
+
     
 }
 
