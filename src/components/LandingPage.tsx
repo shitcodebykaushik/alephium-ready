@@ -28,8 +28,8 @@ const Home: any = () => {
         <div style={styles.logo}>MyWeb3App</div>
         <ul style={styles.navLinks}>
           <li>
-            <a href="#home" style={styles.navItem}>
-              Home
+            <a href="#market" style={styles.navItem}>
+              market
             </a>
           </li>
           <li>

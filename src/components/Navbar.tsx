@@ -13,7 +13,7 @@ const Navbar: React.FC = () => {
           </Link>
         </li>
         <li>
-          <Link href="/market" className={styles.navItem}>
+          <Link href="/Market" className={styles.navItem}>
             Market
           </Link>
         </li>
